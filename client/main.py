@@ -148,16 +148,14 @@ def game():
 
 
 
-        if cnt % 500 == 0:
-            print(board.movenumber)
+        if cnt % 200 == 0:
+            print(cdice)
             inf = requests.get(f"https://lledely.pythonanywhere.com/get/{roomid}").json()
-            if board.orientation == 'w':
-                board.movenumber = int(inf['moven'])
-            else:
-                board.movenumber = int(inf['moven']) + 1
+            board.movenumber = int(inf['moven'])
 
             
-            if cdice[0] != bghelper.transform_dice(inf["dice"])[0]:
+            if cdice[0] != bghelper.transform_dice(inf["dice"])[0] and len(cdice[1]) == 2:
+                if cdice[0][0] != cdice[1][0] and cdice[0][1] != cdice[1][1]:
                     cdice[0] = bghelper.transform_dice(inf["dice"])[0]
                 
             if board.convertfen(inf["state"]) != board.board and not gamejoined:
